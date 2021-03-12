@@ -16,13 +16,11 @@ import java.util.ArrayList;
 
 public class RecycleViewAdapter extends RecyclerView.Adapter<RecycleViewAdapter.ViewHolder> {
 
-    private String[] words;
-    private int indexInList = 0;
-    private  String testStr;
+    private ArrayList<String> words = new ArrayList<>();
     private RecyclerView recyclerView;
 
 
-    public RecycleViewAdapter(String[] words, RecyclerView recyclerView){
+    public RecycleViewAdapter(ArrayList<String> words, RecyclerView recyclerView){
         this.words = words;
         this.recyclerView = recyclerView;
     }
@@ -36,23 +34,17 @@ public class RecycleViewAdapter extends RecyclerView.Adapter<RecycleViewAdapter.
         v.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 int itemPosition = recyclerView.getChildLayoutPosition(view);
-                //String item = words[itemPosition];
-
-
-                //System.out.println("clicked on " + item);
                 CharSequence text = "";
                 if(itemPosition == 0){
-                    text = words[itemPosition] + " is before all other words.";
-                }else if(itemPosition == words.length-1){
-                    text =words[itemPosition] + " is after all other words.";
+                    text = words.get(itemPosition) + " is before all other words.";
+                }else if(itemPosition == words.size()-1){
+                    text = words.get(itemPosition) + " is after all other words.";
                 }else {
-                    text = words[itemPosition] + " is before " + words[itemPosition + 1] + " and after " + words[itemPosition - 1];
+                    text = words.get(itemPosition) + " is after " + words.get(itemPosition-1) + " and before " + words.get(itemPosition+1) + ".";
                 }
                 int duration = Toast.LENGTH_SHORT;
                 Toast toast = Toast.makeText(c, text, duration);
-                //toast.setGravity(Gravity.TOP| Gravity.LEFT, 200, 200);
                 toast.show();
             }
         });
@@ -64,17 +56,14 @@ public class RecycleViewAdapter extends RecyclerView.Adapter<RecycleViewAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull RecycleViewAdapter.ViewHolder holder, int position) {
-        String s = words[position];
-        indexInList = position;
+        String s = words.get(position);
         TextView text = holder.text;
         text.setText(s);
-        testStr = s;
-        System.out.println("setting "+s+ "at "+position);
     }
 
     @Override
     public int getItemCount() {
-        return words.length;
+        return words.size();
     }
 
 
