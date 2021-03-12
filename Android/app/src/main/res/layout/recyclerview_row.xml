@@ -9,8 +9,11 @@
     <TextView
         android:id="@+id/rowEntry"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="20sp"
-        />
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:fontFamily="casual"
+        android:foregroundGravity="center"
+        android:gravity="center"
+        android:textSize="50sp" />
 
 </androidx.appcompat.widget.LinearLayoutCompat>
