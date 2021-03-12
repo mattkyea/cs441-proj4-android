@@ -3,16 +3,13 @@ package com.example.assign4_list;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.recyclerview.widget.RecyclerViewAccessibilityDelegate;
 
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Comparator;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -23,7 +20,8 @@ public class MainActivity extends AppCompatActivity {
 
         //3 xml elements
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.list);
-        Button commitTextButton = (Button) findViewById(R.id.button);
+        Button commitTextButton = (Button) findViewById(R.id.addText);
+        Button removeTextButton = (Button) findViewById(R.id.removeText);
         TextView  textToCommit = (TextView) findViewById(R.id.textEntry);
 
         //this will store all elements in the list
@@ -47,12 +45,23 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setAdapter(a[0]);//set view and my adapter
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        //when button is pressed
+        //when add text button is pressed
         commitTextButton.setOnClickListener(v -> {
             words.add(textToCommit.getText().toString());//add user's entry to list
             words.sort((s1, s2) -> s1.compareTo(s2));//resort
             a[0] = new RecycleViewAdapter(words, recyclerView);//and re-add so that recycler shows changes
             recyclerView.setAdapter(a[0]);
+        });
+
+
+        removeTextButton.setOnClickListener(v -> {
+            if(!words.remove(textToCommit.getText().toString())) {//remove user's entry to list
+                Toast.makeText(this,textToCommit.getText().toString() + " is not in the list." , Toast.LENGTH_SHORT).show();
+            }else {
+                words.sort((s1, s2) -> s1.compareTo(s2));//resort
+                a[0] = new RecycleViewAdapter(words, recyclerView);//and re-add so that recycler shows changes
+                recyclerView.setAdapter(a[0]);
+            }
         });
     }
 
